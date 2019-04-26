@@ -1,0 +1,16 @@
+baseball = read.csv("baseball.csv")
+str(baseball)
+length(table(baseball$Year))
+baseball = subset(baseball, baseball$Playoffs==1)
+nrow(baseball)
+table(baseball$Year)
+PlayoffTable = table(baseball$Year)
+names(PlayoffTable)
+PlayoffTable[c("1990","2001")]
+baseball$NumCompetitors = PlayoffTable[as.character(baseball$Year)]
+table(baseball$NumCompetitors)
+baseball$WorldSeries = as.numeric(baseball$RankPlayoffs == 1)
+table(baseball$WorldSeries)
+LogModel = glm(WorldSeries ~ Year + RA + RankSeason + NumCompetitors, data = baseball, family = binomial)
+summary(LogModel)
+cor(baseball[c("Year", "RA", "RankSeason", "NumCompetitors")])

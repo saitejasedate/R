@@ -1,0 +1,16 @@
+climate = read.csv("climate_change.csv")
+train = subset(climate, climate$Year<=2006)
+model = lm(Temp ~ MEI + CO2 + CH4 + N2O + CFC.11 + CFC.12 + TSI + Aerosols, data = train)
+summary(model)
+cor(train)
+model2 = lm(Temp ~ MEI + TSI + Aerosols + N2O, data = train)
+summary(model2)
+model2 = step(model)
+summary(model2)
+test = subset(climate, climate$Year>2006)
+predictmodel = predict(model2, test)
+summary(predictmodel)
+SSE = sum((test$Temp - predictmodel)^2)
+SST = sum((test$Temp - mean(train$Temp))^2)
+R2 = 1 - SSE/SST
+R2

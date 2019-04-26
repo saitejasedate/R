@@ -1,0 +1,56 @@
+tweets = read.csv("tweets.csv", stringsAsFactors=FALSE)
+
+corpus = VCorpus(VectorSource(tweets$Tweet))
+
+corpus = tm_map(corpus, content_transformer(tolower))
+
+corpus = tm_map(corpus, removePunctuation)
+
+corpus = tm_map(corpus, removeWords, stopwords("english"))
+
+frequencies = DocumentTermMatrix(corpus)
+
+allTweets = as.data.frame(as.matrix(frequencies))
+
+ncol(allTweets)
+
+install.packages("wordcloud")
+
+library(wordcloud)
+
+colnames(allTweets)
+
+str(allTweets) 
+
+tweets = read.csv("tweets.csv", stringsAsFactors=FALSE)
+
+corpus = Corpus(VectorSource(tweets$Tweet))
+
+corpus = tm_map(corpus, tolower)
+display.brewer.all()
+colors=brewer.pal(9, "Blues")
+
+corpus = tm_map(corpus, removePunctuation)
+
+corpus = tm_map(corpus, removeWords, c("apple", stopwords("english")))
+
+frequencies = DocumentTermMatrix(corpus)
+
+allTweets = as.data.frame(as.matrix(frequencies))
+
+wordcloud(colnames(allTweets), colSums(allTweets))
+
+wordcloud(colnames(allTweets), colSums(allTweets), scale=c(2, 0.25))
+
+ negativeTweets = subset(allTweets, tweets$Avg <= -1)
+> wordcloud(colnames(negativeTweets), colSums(negativeTweets))
+> rot.per=0.5
+ c("red", "green", "blue")
+install.packages("RColorBrewer")
+library(RColorBrewer)
+
+brewer.pal(9, "Blues")[-1:-4]
+
+brewer.pal(9, "Blues")[5:9]
+
+
